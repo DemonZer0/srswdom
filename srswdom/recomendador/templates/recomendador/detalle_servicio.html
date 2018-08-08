@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load saludo_tag %}
+{% load bootstrap3 %}
+
+{% block title %}
+<h2><a href="{% url 'recomendador:detalle_servicio' servicio.id %}">Id del servicio: {{ servicio.id }}</a></h2>
+<h5>{{ servicio.calificacion_set.count }} calificaciones ({{ servicio.calificacion_promedio | floatformat }} calificación promedio)</h5>
+{% endblock %}
+
+{% block content %}
+
+{% hello_world servicio.proveedor as claveas %}
+<p><b>Dirección WSDL: </b>{{ servicio.direccionwsdl }}</p>
+<p><b>Dirección IP: </b>{{ servicio.direccionip }}</p>
+
+<p>Proovedor: <a href="{% url 'recomendador:detalle_proveedor' claveas %}"> {{ servicio.proveedor}}</a></p>
+<p><b>Dominio: </b>{{ servicio.dominio.nombredominio }}</p>
+
+<p><b>Calificación promedio: </b>{{ servicio.dominio.nombredominio }}</p>
+
+
+
+
+<h3>Calificaciones recientes</h3>
+
+{% if servicio.calificacion_set.all %}
+<div class="row">
+    {% for cal in servicio.calificacion_set.all%}
+    <div class="col-xs-6 col-lg-4">
+          <h6>Calificación {{ cal.calificacion }} of 5 por  <b>Usuario:</b>
+        <ul>
+            <li>Id: <a href="{% url 'recomendador:detalle_usuario' cal.usuario.id %}">{{ cal.usuario.id}}</a></li>
+            <li>IP: {{cal.usuario.direccionip}}</li> 
+            <li>Tipo de Usuario: {{cal.usuario.tipousuario.tipousuario}}</li>
+        </ul></h6>
+        
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No hay calificaciones para este servicio todavia</p>
+{% endif %}
+
+<h3>Añadir calificación</h3>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'recomendador:nueva_calificacion' servicio.id %}" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form layout='inline' %}
+    
+    {% buttons %}
+    <button type="submit" class="btn btn-primary">
+      {% bootstrap_icon "star" %} Add
+    </button>
+    {% endbuttons %}
+
+</form>
+
+<h1>Recomendaciones </h1>
+<h3>Filtro basado en contenido </h3>
+{% endblock %}
+
+
+	

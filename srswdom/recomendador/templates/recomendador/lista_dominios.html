@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Lista de Dominios</h2>
+<h3>Numero de Dominios: {{lista_dominios.count}}</h3>
+{% endblock %}
+
+{% block content %}
+{% if lista_dominios %}
+<div class="row">
+    {% for dominio in lista_dominios %}
+    <div class="col-xs-6 col-lg-4">
+        <h4><a href="{% url 'recomendador:detalle_dominio' dominio.id %}">
+        {{ dominio.nombredominio }}
+        </a></h4>
+      
+       
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No hay dominios disponibles.</p>
+{% endif %}
+{% endblock %}
+

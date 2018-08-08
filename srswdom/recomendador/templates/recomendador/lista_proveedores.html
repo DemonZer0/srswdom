@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Lista de Proveedores</h2>
+{% endblock %}
+
+{% block content %}
+{% if lista_proveedores %}
+<div class="row">
+    {% for proveedor in lista_proveedores %}
+    <div class="col-xs-6 col-lg-4">
+        <h4><a href="{% url 'recomendador:detalle_proveedor' proveedor.id %}">
+        {{ proveedor.nombreproveedor }}
+        </a></h4>
+        <h5><p><b>Nombre de la organización:</b>{{ proveedor.nombreorganizacion }}</p></h5>
+        <h5><p><b>Rango AS:</b>{{ proveedor.rangoas }}</p></h5>
+        <h5><p><b>Grado AS:</b>{{ proveedor.gradoas }}</p></h5>
+       
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No hay proveedors disponibles.</p>
+{% endif %}
+{% endblock %}
+

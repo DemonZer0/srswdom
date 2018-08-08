@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load saludo_tag %}
+
+{% block title %}
+<h2><a href="{% url 'recomendador:detalle_usuario' usuario.id  %}">Id del usuario: {{ usuario.id  }}</a></h2>
+{% endblock %}
+
+{% block content %}
+<p>Dirección IP: {{ usuario.direccionip }}</p>
+<p>Tipo de Usuario: {{ usuario.tipousuario.tipousuario }}</p>
+
+<h3>Calificaciones recientes</h3>
+
+{% if usuario.calificacion_set.all %}
+<div class="row">
+    {% for cal in usuario.calificacion_set.all%}
+    <div class="col-xs-6 col-lg-4">
+          <h6>Calificación {{ cal.calificacion }} de 5 al <b>servicio </b> 
+          	<ul>
+            <li>Id: <a href="{% url 'recomendador:detalle_servicio' cal.servicio.id %}">{{ cal.servicio.id }}</a></li>
+            {% hello_world cal.servicio.proveedor as claveas %}
+            <li>Proovedor: <a href="{% url 'recomendador:detalle_proveedor' claveas %}"> {{ cal.servicio.proveedor}}</a></li>
+            <li><b>Dominio del servicio: </b>{{ cal.servicio.dominio.nombredominio }}</li>
+        </ul></h6>
+        
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No hay calificaciones para este servicio todavia</p>
+{% endif %}
+
+<h1>Recomendaciones </h1>
+<h3>Filtro colaborativo basado en usuario </h3>
+
+
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load saludo_tag %}
+
+{% block title %}
+<h2>Calificaciones</h2>
+<h3>Numero de Calificaciones: {{calificaciones.count}}</h3>
+{% endblock %}
+
+{% block content %}
+{% if calificaciones %}
+<div class="row">
+    {% for calificacion in calificaciones %}
+    <div class="col-xs-6 col-lg-6">
+        <h4>
+        {{ calificacion.id }}
+        </a></h4>
+        <h5><p><b>Usuario:</b></p></h5>
+        <ul>
+            <li>Id: <a href="{% url 'recomendador:detalle_usuario' calificacion.usuario.id %}">{{ calificacion.usuario.id}}</a></li>
+            <li>IP: {{calificacion.usuario.direccionip}}</li> 
+            <li>Tipo de Usuario: {{calificacion.usuario.tipousuario.tipousuario}}</li>
+        </ul>
+            
+        <h5><p><b>Servicio:</b></p></h5>
+        <ul>
+            <li>Id: <a href="{% url 'recomendador:detalle_servicio' calificacion.servicio.id %}">{{ calificacion.servicio.id }}</a></li>
+            {% hello_world calificacion.servicio.proveedor as claveas %}
+            <li>Proovedor: <a href="{% url 'recomendador:detalle_proveedor' claveas %}"> {{ calificacion.servicio.proveedor}}</a></li>
+            <li><b>Dominio del servicio: </b>{{ calificacion.servicio.dominio.nombredominio }}</li>
+        </ul>
+        <h5><p><b>Calificacion: </b>{{ calificacion.calificacion }}</p></h5>
+        <h5><p><b>Fecha: </b>{{ calificacion.fecha_calificacion }}</p></h5>
+       
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No hay calificaciones disponibles.</p>
+{% endif %}
+{% endblock %}

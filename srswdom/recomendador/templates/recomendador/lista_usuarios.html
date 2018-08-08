@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+<h2>Lista de Usuarios</h2>
+<h3>Numero de Usuarios: {{lista_usuarios.count}}</h3>
+{% endblock %}
+
+{% block content %}
+{% if lista_usuarios %}
+
+<div class="row">
+    {% for usuario in lista_usuarios %}
+    <div class="col-xs-6 col-lg-6">
+        <h4><a href="{% url 'recomendador:detalle_usuario' usuario.id %}">
+        {{ usuario.id }}
+        </a></h4>
+        <p><b>Dirección IP: </b>{{ usuario.direccionip }}</p>
+		<p><b>Tipo de usuario: </b>{{ usuario.tipousuario.tipousuario }}</p>
+	
+       
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No hay usuarios disponibles.</p>
+{% endif %}
+{% endblock %}
+

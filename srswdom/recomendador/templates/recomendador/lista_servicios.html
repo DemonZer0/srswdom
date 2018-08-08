@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load saludo_tag %}
+
+{% block title %}
+<h2>Lista de Servicios</h2>
+<h3>Numero de Servicios: {{lista_servicios.count}}</h3>
+{% endblock %}
+
+{% block content %}
+
+{% if lista_servicios %}
+
+
+
+    
+
+
+<div class="row">
+    {% for servicio in lista_servicios %}
+
+    <div class="col-xs-6 col-lg-6">
+        <h4><a href="{% url 'recomendador:detalle_servicio' servicio.id %}">
+        {{ servicio.id }}
+        </a></h4>
+
+        {% hello_world servicio.proveedor as claveas %}
+        
+        
+        <h5><p><b>Dirección WSDL: </b>{{ servicio.direccionwsdl }}</p></h5>
+        <h5><p><b>Dirección IP: </b>{{ servicio.direccionip }}</p></h5>
+        <h5>Proovedor: <a href="{% url 'recomendador:detalle_proveedor' claveas %}"> {{ servicio.proveedor}}</a></h5>
+      
+        <h5><p><b>Dominio del servicio: </b>{{ servicio.dominio.nombredominio }}</p></h5>
+       
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+    <p>No hay Servicios disponibles.</p>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load datos_tag %}
+
+{% block title %}
+
+
+{% endblock %}
+
+{% block content %}
+{% obtener_datos_asrank proveedor_id as valores %}
+
+<p>Datos del proveedor</p>
+<p><h1>As Number:{{ valores.asnumber }}</p></h1>
+<p><b>As Nombre:</b>{{ valores.asname }}</p>
+<p><b>Organización:</b>{{ valores.organization}}</p>
+<p><b>AS Rank:</b>{{ valores.asRank }}</p>
+<p><a href="{{ valores.url }}">URL: {{ valores.url }}</a></p>
+
+
+{% endblock %}
